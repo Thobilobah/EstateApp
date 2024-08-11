@@ -1,7 +1,11 @@
 using EstateApp.Data;
+using EstateApp.Services; // Import the namespace for PaymentService
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Inject the HttpClientFactory
+builder.Services.AddHttpClient();
 
 // Add services to the container.
 builder.Services.AddControllers(options => options.ReturnHttpNotAcceptable = true).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
@@ -25,6 +29,9 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+
+// Register PaymentService with dependency injection
+builder.Services.AddTransient<PaymentService>();
 
 var app = builder.Build();
 
