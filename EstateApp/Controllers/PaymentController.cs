@@ -62,7 +62,7 @@ namespace EstateApp.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PaymentDTO>> CreatePayment([FromBody] PaymentDTO model)
+        public async Task<IActionResult> CreatePayment([FromBody] PaymentDTO model)
         {
             if (model == null)
                 return BadRequest();
@@ -82,19 +82,22 @@ namespace EstateApp.Controllers
             var paystackResponse = await _paymentService.InitiatePayment(model);
 
             // Handle Paystack response
-            if (paystackResponse.Status)
+            if (paystackResponse.status)
             {
-                return CreatedAtRoute("GetPaymentById", new { id = model.id }, new
+
+                var response = new
                 {
                     model.id,
                     model.email,
                     model.amountPaid,
-                    paystackResponse.Data.AuthorizationUrl
-                });
+                    paystackResponse.data.authorization_url
+                };
+
+                return Ok(response);
             }
             else
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, paystackResponse.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, paystackResponse.message);
             }
         }
 
