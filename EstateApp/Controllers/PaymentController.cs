@@ -28,7 +28,7 @@ namespace EstateApp.Controllers
             {
                 id = p.id,
                 email = p.email,
-                amountPaid = p.amountPaid
+                amount = p.amount
             }).ToList();
 
             return Ok(payments);
@@ -52,7 +52,7 @@ namespace EstateApp.Controllers
             {
                 id = payment.id,
                 email = payment.email,
-                amountPaid = payment.amountPaid
+                amount = payment.amount
             };
 
             return Ok(paymentDTO);
@@ -72,7 +72,9 @@ namespace EstateApp.Controllers
             {
                 id = newId,
                 email = model.email,
-                amountPaid = model.amountPaid
+                amount = model.amount,
+                dateCreated = model.dateCreated,
+                dateCompleted = model.dateCompleted
             };
             PaymentRepository.Payments.Add(payment);
 
@@ -87,10 +89,11 @@ namespace EstateApp.Controllers
 
                 var response = new
                 {
-                    model.id,
-                    model.email,
-                    model.amountPaid,
-                    paystackResponse.data.authorization_url
+                    paystackResponse.status,
+                    paystackResponse.message,
+                    paystackResponse.data.authorization_url,
+                    paystackResponse.data.access_code,
+                    paystackResponse.data.reference
                 };
 
                 return Ok(response);
@@ -116,7 +119,7 @@ namespace EstateApp.Controllers
                 return NotFound();
 
             existingPayment.email = model.email;
-            existingPayment.amountPaid = model.amountPaid;
+            existingPayment.amount = model.amount;
 
             return NoContent();
         }

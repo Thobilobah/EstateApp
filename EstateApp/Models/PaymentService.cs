@@ -27,7 +27,7 @@ namespace EstateApp.Services
             var paymentData = new
             {
                 email = paymentDTO.email,
-                amount = (int)(paymentDTO.amountPaid * 100), // This conversion is required for Paystack
+                amount = (int)(paymentDTO.amount * 100), // This conversion is required for Paystack
                 callback_url = "http://127.0.0.1:5500/make_payments.html"
             };
 

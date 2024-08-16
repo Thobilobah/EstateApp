@@ -95,11 +95,11 @@ namespace EstateApp.Controllers
                 return NotFound();
             }
 
-            existingPaymentInfo.invoiceRefNo = paymentInfo.invoiceRefNo;
-            existingPaymentInfo.amountPaid = paymentInfo.amountPaid;
-            existingPaymentInfo.paymentMethod = paymentInfo.paymentMethod;
-            existingPaymentInfo.paymentStatus = paymentInfo.paymentStatus;
-            existingPaymentInfo.paymentDate = paymentInfo.paymentDate;
+            existingPaymentInfo.email = paymentInfo.email;
+            existingPaymentInfo.amount = paymentInfo.amount;
+            existingPaymentInfo.dateCreated = paymentInfo.dateCreated;
+            existingPaymentInfo.dateCompleted = paymentInfo.dateCompleted;
+            existingPaymentInfo.status = paymentInfo.status;
 
             _context.PaymentInfo.Update(existingPaymentInfo);
             await _context.SaveChangesAsync();
@@ -128,12 +128,12 @@ namespace EstateApp.Controllers
             var paymentInfoDTO = new PaymentInfo
             {
                 id = existingPaymentInfo.id,
-                invoiceRefNo = existingPaymentInfo.invoiceRefNo,
-                amountPaid = existingPaymentInfo.amountPaid,
-                paymentMethod = existingPaymentInfo.paymentMethod,
-                paymentStatus = existingPaymentInfo.paymentStatus,
-                paymentDate = existingPaymentInfo.paymentDate
-            };
+                email = existingPaymentInfo.email,
+                amount = existingPaymentInfo.amount,
+                dateCreated = existingPaymentInfo.dateCreated,
+                dateCompleted = existingPaymentInfo.dateCompleted,
+                status = existingPaymentInfo.status
+        };
 
             patchDocument.ApplyTo(paymentInfoDTO, (error) =>
             {
@@ -145,11 +145,11 @@ namespace EstateApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            existingPaymentInfo.invoiceRefNo = paymentInfoDTO.invoiceRefNo;
-            existingPaymentInfo.amountPaid = paymentInfoDTO.amountPaid;
-            existingPaymentInfo.paymentMethod = paymentInfoDTO.paymentMethod;
-            existingPaymentInfo.paymentStatus = paymentInfoDTO.paymentStatus;
-            existingPaymentInfo.paymentDate = paymentInfoDTO.paymentDate;
+            existingPaymentInfo.email = paymentInfoDTO.email;
+            existingPaymentInfo.amount = paymentInfoDTO.amount;
+            existingPaymentInfo.dateCreated = paymentInfoDTO.dateCreated;
+            existingPaymentInfo.dateCompleted = paymentInfoDTO.dateCompleted;
+            existingPaymentInfo.status = paymentInfoDTO.status;
 
             _context.PaymentInfo.Update(existingPaymentInfo);
             await _context.SaveChangesAsync();

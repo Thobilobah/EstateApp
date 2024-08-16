@@ -12,6 +12,9 @@ namespace EstateApp.Models
 
         [Required(ErrorMessage = "Amount is required")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
-        public decimal amountPaid { get; set; }
+        public decimal amount { get; set; }
+
+        public DateOnly dateCreated { get; set; }
+        public DateOnly dateCompleted { get; set; }
     }
 }
